@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResumeMetadataUI", "ResumeMetadata\ResumeMetadataUI.csproj", "{5285BA8B-0774-4ED5-8553-38FAB532B457}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResumeMetadataLibrary", "ResumeMetadataLibrary\ResumeMetadataLibrary.csproj", "{D6D42BF7-D053-4662-9238-7327F09E7CBB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5285BA8B-0774-4ED5-8553-38FAB532B457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5285BA8B-0774-4ED5-8553-38FAB532B457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5285BA8B-0774-4ED5-8553-38FAB532B457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5285BA8B-0774-4ED5-8553-38FAB532B457}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6D42BF7-D053-4662-9238-7327F09E7CBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6D42BF7-D053-4662-9238-7327F09E7CBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6D42BF7-D053-4662-9238-7327F09E7CBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6D42BF7-D053-4662-9238-7327F09E7CBB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C79ECB6B-BD04-4281-B6D0-560FFD012469}
+	EndGlobalSection
+EndGlobal

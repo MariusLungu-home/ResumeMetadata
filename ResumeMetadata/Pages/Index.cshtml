@@ -1,0 +1,42 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@{
+    ViewData["Title"] = "Metadata Insertion Tool";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Metadata Insertion Tool</h4>
+            <p>Use this tool to insert relevant search keywords into a Résumé or Curriculum Vitae, in the form of non-intrusive Metadata. As an example, let's say you wish to apply for a job as "Trainer", in your Resume you probably want to add similar variations "Instructor, Coach, Mentor" with variations in a second language. Repeat this process for any skills you possess that have relevance to the job you are applying for.</p>
+
+            <form>
+                <div class="form-group">
+                    <label for="sourceDocument">Source Document (Microsoft Word):</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="sourceDocument" placeholder="Choose file...">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">Browse...</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="newDocumentName">Name of new Document:</label>
+                    <input type="text" class="form-control" id="newDocumentName">
+                </div>
+
+                <div class="form-group">
+                    <label for="metadata">Metadata to Insert</label>
+                    <textarea class="form-control" id="metadata" rows="3">My Expertise, Skill, Ability, Talent, Proficiency, Capability, Competence, Aptitude, Fähigkeit, Kompetenz, Talent, Befähigung, etc...</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Generate</button>
+            </form>
+        </div>
+    </div>
+</div>
