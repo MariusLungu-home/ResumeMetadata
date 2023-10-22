@@ -12,6 +12,12 @@ namespace ResumeMetadata.Pages
         [BindProperty(SupportsGet = true)]
         public string OutputText { get; set; }
 
+        [BindProperty]
+        public IFormFile DocxFile { get; set; }
+
+        [BindProperty]
+        public string MetadataContent{ get; set; }
+
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
@@ -22,22 +28,36 @@ namespace ResumeMetadata.Pages
 
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
-            // TODO: Get data from form
+            // Process textarea content
+            if (string.IsNullOrWhiteSpace(MetadataContent))
+            {
+                OutputText = "You added no metadata.";
+                return RedirectToPage(OutputText);
+            }
 
-            string sourcePath = Request.Form["sourcePath"];
-            string destinationPath = Request.Form["destinationPath"];
-            string metaDataToInsert = Request.Form["metaDataToInsert"];
+            // Process the uploaded .docx file
+            if (DocxFile != null && DocxFile.Length > 0)
+            {
+                var utilities = new Utilities();
 
-            // TODO: Use dependency injection to get the Utilities class
-            new Utilities().InsertMetadata(sourcePath, destinationPath, metaDataToInsert);
+                // Assuming InsertMetadata returns a Stream with the modified content
+                using (var memoryStream = new MemoryStream())
+                {
+                    await DocxFile.CopyToAsync(memoryStream);
+                    Stream modifiedStream = await utilities.InsertMetadata(memoryStream, MetadataContent);
 
+                    modifiedStream.Position = 0;
+                    return new FileStreamResult(modifiedStream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                    {
+                        FileDownloadName = $"Modified_{DocxFile.FileName}"
+                    };
+                }
+            }
 
-            // TODO: Return the data to the page
-            return RedirectToPage(new { OutputText });
-
-            // TODO: if error, return error message
+            OutputText = "New document created! Warning: A small white (non-visible) object was appended to the end of your document. Please check that this has not caused an additional page to be added to your document.";
+            return RedirectToPage(OutputText);
         }
     }
 }
