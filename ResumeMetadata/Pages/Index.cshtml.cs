@@ -34,6 +34,7 @@ namespace ResumeMetadata.Pages
             if (string.IsNullOrWhiteSpace(MetadataContent))
             {
                 OutputText = "You added no metadata.";
+
                 return RedirectToPage(OutputText);
             }
 
@@ -41,22 +42,23 @@ namespace ResumeMetadata.Pages
             if (DocxFile != null && DocxFile.Length > 0)
             {
                 var utilities = new Utilities();
+                var memoryStream = new MemoryStream();
+                
+                await DocxFile.CopyToAsync(memoryStream);
+                Stream modifiedStream = await utilities.InsertMetadata(memoryStream, MetadataContent);
 
-                // Assuming InsertMetadata returns a Stream with the modified content
-                using (var memoryStream = new MemoryStream())
+                modifiedStream.Position = 0;
+
+                FileStreamResult result = new FileStreamResult(modifiedStream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
                 {
-                    await DocxFile.CopyToAsync(memoryStream);
-                    Stream modifiedStream = await utilities.InsertMetadata(memoryStream, MetadataContent);
+                    FileDownloadName = $"Modified_{DocxFile.FileName}"
+                };
 
-                    modifiedStream.Position = 0;
-                    return new FileStreamResult(modifiedStream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-                    {
-                        FileDownloadName = $"Modified_{DocxFile.FileName}"
-                    };
-                }
+                return result;
             }
 
-            OutputText = "New document created! Warning: A small white (non-visible) object was appended to the end of your document. Please check that this has not caused an additional page to be added to your document.";
+            OutputText = "AI broke, try again.";
+
             return RedirectToPage(OutputText);
         }
     }
