@@ -10,7 +10,7 @@
 }
 
 <div class="alert alert-info">
-    <strong>Disclaimer:  We do not store any CVs on our servers. This app is open-source, allowing everyone to view and inspect its code.</strong>
+    <strong>We do not store any CVs on our servers. This app is open-source, allowing everyone to view and inspect its code.</strong>
 </div>
 
 <div class="container mt-5">
@@ -30,11 +30,11 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Metadata Insertion Tool</h4>
-            <p>Use this tool to insert relevant search keywords into a Résumé or Curriculum Vitae, in the form of non-intrusive Metadata. As an example, let's say you wish to apply for a job as "Trainer", in your Resume you probably want to add similar variations "Instructor, Coach, Mentor" with variations in a second language. Repeat this process for any skills you possess that have relevance to the job you are applying for.</p>
+            <p>Use this tool to add related search keywords to your résumé as hidden metadata. For instance, if you're applying for a "Trainer" job, include similar words like "Instructor, Coach, Mentor" and their translations. Do this for all relevant skills for the job you're seeking.</p>
 
             <form method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="docxFile">Choose a .docx file:</label>
+                    <label for="docxFile">Choose a <strong>.docx</strong> file:</label>
                     <div class="input-group">
                         <input type="file" asp-for="DocxFile"  class="form-control" accept=".docx" id="sourceDocument" placeholder="Choose file...">
                     </div>
