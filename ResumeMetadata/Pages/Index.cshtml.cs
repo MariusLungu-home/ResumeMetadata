@@ -54,6 +54,9 @@ namespace ResumeMetadata.Pages
             var memoryStream = new MemoryStream();
             await DocxFile.CopyToAsync(memoryStream);
             Stream modifiedStream = await _utilities.InsertMetadata(memoryStream, MetadataContent);
+            
+            // Info that a file was uploaded
+            _logger.LogInformation($"File uploaded.");
 
             if (modifiedStream == null)
             {
