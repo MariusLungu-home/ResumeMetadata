@@ -1,4 +1,5 @@
 ﻿@page
+@using ResumeMetadataUI;
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -8,10 +9,23 @@
     ViewData["Title"] = "Metadata Insertion Tool";
 }
 
+<div class="alert alert-info">
+    <strong>Disclaimer:  We do not store any CVs on our servers. This app is open-source, allowing everyone to view and inspect its code.</strong>
+</div>
+
 <div class="container mt-5">
-    <div>
-        <h1 class="--warning">@Html.Raw(Model.OutputText)</h1>
-    </div>
+    @if (Model.MessageStatus == MessageType.Warning)
+    {
+        <div class="alert alert-warning">
+            <strong>Warning!</strong> @Html.Raw(Model.OutputText)
+        </div>
+    }
+    else if (Model.MessageStatus == MessageType.Information)
+    {
+        <div class="alert alert-info">
+            <strong>Information:</strong> @Html.Raw(Model.OutputText)
+        </div>
+    }
 
     <div class="card">
         <div class="card-body">
