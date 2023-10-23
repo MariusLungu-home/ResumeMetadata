@@ -18,9 +18,10 @@ namespace ResumeMetadata.Pages
         [BindProperty]
         public string MetadataContent{ get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, IUtilities utilities)
         {
             _logger = logger;
+            _utilities = utilities;
         }
 
         public void OnGet()
@@ -41,11 +42,10 @@ namespace ResumeMetadata.Pages
             // Process the uploaded .docx file
             if (DocxFile != null && DocxFile.Length > 0)
             {
-                var utilities = new Utilities();
                 var memoryStream = new MemoryStream();
                 
                 await DocxFile.CopyToAsync(memoryStream);
-                Stream modifiedStream = await utilities.InsertMetadata(memoryStream, MetadataContent);
+                Stream modifiedStream = await _utilities.InsertMetadata(memoryStream, MetadataContent);
 
                 modifiedStream.Position = 0;
 
