@@ -2,18 +2,14 @@
 @using ResumeMetadataUI;
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "FileFusion";
 }
-
-@{
-    ViewData["Title"] = "Metadata Insertion Tool";
-}
-
-<div class="alert alert-info">
-    <strong>We do not store any CVs on our servers. This app is open-source, allowing everyone to view and inspect its code.</strong>
-</div>
 
 <div class="container mt-5">
+    <div class="alert alert-info">
+        <strong>We do not store any files on our servers. This app is open-source, allowing everyone to view and inspect its code.</strong>
+    </div>
+
     @if (Model.MessageStatus == MessageType.Warning)
     {
         <div class="alert alert-warning">
@@ -29,24 +25,30 @@
 
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Metadata Insertion Tool</h4>
-            <p>Use this tool to add related search keywords to your résumé as hidden metadata. For instance, if you're applying for a "Trainer" job, include similar words like "Instructor, Coach, Mentor" and their translations. Do this for all relevant skills for the job you're seeking.</p>
+            <h4 class="card-title">FileFusion: a metadata insertion tool</h4>
+            <p>
+                Boost your documents' appeal across various markets by embedding related search keywords as hidden metadata. For instance, in a 'Training' related document, include terms like 'Instructor', 'Coach', 'Mentor', and their translations. Apply this tactic to all pertinent terms for broader reach.
+            </p>
 
-            <form method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="docxFile">Choose a <strong>.docx</strong> file:</label>
-                    <div class="input-group">
-                        <input type="file" asp-for="InputFile" class="form-control-file border" accept=".docx,.pdf" id="sourceDocument" placeholder="Choose file...">
+            <div style="margin-top:3em">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="docxFile">Choose a <strong>.pdf</strong>  or <strong>.docx</strong> file:</label>
+                        <div class="input-group">
+                            <input type="file" asp-for="InputFile" class="form-control-file border" accept=".docx,.pdf" id="sourceDocument" placeholder="Choose file...">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="metadata">Metadata to Insert</label>
-                    <textarea asp-for="MetadataContent" class="form-control" id="metadata" rows="3" placeholder="Expertise, Skill, Ability, Talent, Proficiency, Capability, Competence, Aptitude, Fähigkeit, Kompetenz, Talent, Befähigung, etc..."></textarea>
-                </div>
+                    <div class="form-group">
+                        <label for="metadata">Metadata to Insert</label>
+                        <textarea asp-for="MetadataContent" class="form-control" id="metadata" rows="3" placeholder="Expertise, Skill, Ability, Talent, etc..."></textarea>
+                    </div>
 
-                <button type="submit" class="btn btn-primary">Generate</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">Generate</button>
+                </form>
+
+            </div>
+
         </div>
     </div>
 </div>

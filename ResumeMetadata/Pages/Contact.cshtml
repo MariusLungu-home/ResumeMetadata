@@ -1,0 +1,38 @@
+﻿@page
+@model ResumeMetadataUI.Pages.ContactModel
+@{
+    ViewData["Title"] = "FileFusion";
+}
+@Html.AntiForgeryToken()
+
+<div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <img class="img-fluid" src="images/contact-us.png" alt="contact-us image" />
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            <div class="form-group">
+                                <label asp-for="ContactForm.Name">Name</label>
+                                <input asp-for="ContactForm.Name" type="text" class="form-control" id="Name" name="Name" placeholder="Enter your name">
+                                <span asp-validation-for="ContactForm.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ContactForm.Email">Email</label>
+                                <input asp-for="ContactForm.Email" type="email" class="form-control" id="Email" name="Email" placeholder="Enter your email">
+                                <span asp-validation-for="ContactForm.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ContactForm.Message">Message</label>
+                                <textarea asp-for="ContactForm.Message" type="text" class="form-control" name="Message" rows="3"></textarea>
+                                <span asp-validation-for="ContactForm.Message" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

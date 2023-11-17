@@ -1,11 +1,13 @@
 using ResumeMetadataLibrary.Services;
+using SendGridMailSender;
+using SendGridMailSender.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddTransient<IUtilities, Utilities>();
-
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
