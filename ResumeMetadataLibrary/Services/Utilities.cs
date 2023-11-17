@@ -1,11 +1,27 @@
-﻿// Replace "path_to_existing_document.docx" with the actual path to your existing Word document. This code will open the document, insert the specified table, and save it.
-using DocumentFormat.OpenXml.Packaging;
+﻿using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using ResumeMetadataLibrary;
+using PdfSharp.Pdf;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf.IO;
+using ResumeMetadataLibrary.Services;
+using PdfSharp.Fonts;
+using ResumeMetadataLibrary.Resolvers;
 
 public class Utilities : IUtilities
 {
-    public Task<Stream> InsertMetadata(Stream source, string metaDataToInsert)
+
+    private static bool _fontResolverSet = false;
+
+    public static void InitializeFontResolver()
+    {
+        if (!_fontResolverSet)
+        {
+            GlobalFontSettings.FontResolver = new CustomFontResolver();
+            _fontResolverSet = true;
+        }
+    }
+
+    public Task<Stream> InsertMetadataDocx(Stream source, string metaDataToInsert)
     {
         // Open the Word document
         using (WordprocessingDocument wordDocument = WordprocessingDocument.Open(source, true))
@@ -93,6 +109,25 @@ public class Utilities : IUtilities
             // Save the document
             mainPart.Document.Save();
         }
+
+        return Task.Run(() => source);
+    }
+
+    public Task<Stream> InsertMetadataPdf(Stream source, string metaDataToInsert)
+    {
+        InitializeFontResolver();
+
+        PdfDocument document = PdfReader.Open(source, PdfDocumentOpenMode.Modify);
+        PdfPage page = document.Pages[0];
+        XGraphics gfx = XGraphics.FromPdfPage(page);
+        XFont font = new XFont("Arial", 0.01, XFontStyleEx.Regular);
+        XBrush brush = new XSolidBrush(XColor.FromArgb(1, 1, 1, 1)); // Transparent brush
+
+        gfx.DrawString(metaDataToInsert, font, brush, new XRect(0, 0, page.Width, page.Height), XStringFormats.BottomRight);
+
+
+        document.Save(source);
+        document.Close();
 
         return Task.Run(() => source);
     }

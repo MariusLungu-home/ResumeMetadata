@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ResumeMetadataLibrary;
+using ResumeMetadataLibrary.Services;
 using ResumeMetadataUI;
 
 namespace ResumeMetadata.Pages
@@ -14,7 +14,7 @@ namespace ResumeMetadata.Pages
         public string OutputText { get; set; }
 
         [BindProperty]
-        public IFormFile DocxFile { get; set; }
+        public IFormFile InputFile { get; set; }
 
         [BindProperty]
         public string MetadataContent{ get; set; }
@@ -35,7 +35,7 @@ namespace ResumeMetadata.Pages
         public async Task<IActionResult> OnPost()
         {
             // Check if the user did not upload a file
-            if (DocxFile == null || DocxFile.Length == 0)
+            if (InputFile == null || InputFile.Length == 0)
             {
                 OutputText = "Please upload a valid .docx file.";
                 MessageStatus = MessageType.Warning;
@@ -52,8 +52,18 @@ namespace ResumeMetadata.Pages
             }
 
             var memoryStream = new MemoryStream();
-            await DocxFile.CopyToAsync(memoryStream);
-            Stream modifiedStream = await _utilities.InsertMetadata(memoryStream, MetadataContent);
+            await InputFile.CopyToAsync(memoryStream);
+            Stream modifiedStream;
+
+            if (InputFile.FileName.EndsWith("pdf"))
+            {
+                modifiedStream = await _utilities.InsertMetadataPdf(memoryStream, MetadataContent);
+            }
+            else
+            {
+                modifiedStream = await _utilities.InsertMetadataDocx(memoryStream, MetadataContent);
+            }
+            
             
             // Info that a file was uploaded
             _logger.LogInformation($"File uploaded.");
@@ -68,7 +78,7 @@ namespace ResumeMetadata.Pages
             modifiedStream.Position = 0;
             FileStreamResult result = new FileStreamResult(modifiedStream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
             {
-                FileDownloadName = $"Modified_{DocxFile.FileName}"
+                FileDownloadName = $"Modified_{InputFile.FileName}"
             };
 
             OutputText = "File generated successfully!";
